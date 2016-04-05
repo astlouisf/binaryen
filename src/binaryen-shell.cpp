@@ -41,7 +41,10 @@ IString ASSERT_RETURN("assert_return"),
         ASSERT_TRAP("assert_trap"),
         ASSERT_INVALID("assert_invalid"),
         SPECTEST("spectest"),
+        WRITE("write"),
+        WRITELN("writeln"),
         PRINT("print"),
+        PRINTLN("println"),
         INVOKE("invoke"),
         EXIT("exit");
 
@@ -122,7 +125,22 @@ struct ShellExternalInterface : ModuleInstance::ExternalInterface {
   }
 
   Literal callImport(Import *import, ModuleInstance::LiteralList& arguments) override {
-    if (import->module == SPECTEST && import->base == PRINT) {
+    if (import->module == SPECTEST && import->base == WRITE) {
+      for (auto argument : arguments) {
+        std::cout << ((char) (argument.getInteger()));
+      }
+      return Literal();
+    } else if (import->module == SPECTEST && import->base == WRITELN) {
+      for (auto argument : arguments) {
+        std::cout << ((char) (argument.getInteger())) << '\n';
+      }
+      return Literal();
+    } else if (import->module == SPECTEST && import->base == PRINT) {
+      for (auto argument : arguments) {
+        std::cout << argument;
+      }
+      return Literal();
+    } else if (import->module == SPECTEST && import->base == PRINTLN) {
       for (auto argument : arguments) {
         std::cout << argument << '\n';
       }
