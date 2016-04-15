@@ -137,12 +137,12 @@ struct ShellExternalInterface : ModuleInstance::ExternalInterface {
       return Literal();
     } else if (import->module == SPECTEST && import->base == PRINT) {
       for (auto argument : arguments) {
-        std::cout << argument;
+        std::cout << argument.getInteger();
       }
       return Literal();
     } else if (import->module == SPECTEST && import->base == PRINTLN) {
       for (auto argument : arguments) {
-        std::cout << argument << '\n';
+        std::cout << argument.getInteger() << '\n';
       }
       return Literal();
     } else if (import->module == ENV && import->base == EXIT) {
