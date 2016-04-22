@@ -45,6 +45,10 @@ IString ASSERT_RETURN("assert_return"),
         WRITELN("writeln"),
         PRINT("print"),
         PRINTLN("println"),
+        FLWRITE("flwrite"),
+        FLWRITELN("flwriteln"),
+        FLPRINT("flprint"),
+        FLPRINTLN("flprintln"),
         INVOKE("invoke"),
         EXIT("exit");
 
@@ -125,7 +129,27 @@ struct ShellExternalInterface : ModuleInstance::ExternalInterface {
   }
 
   Literal callImport(Import *import, ModuleInstance::LiteralList& arguments) override {
-    if (import->module == SPECTEST && import->base == WRITE) {
+    if (import->module == SPECTEST && import->base == FLWRITE) {
+      for (auto argument : arguments) {
+        std::cout << ((char) (argument.getFloat()));
+      }
+      return Literal();
+    } else if (import->module == SPECTEST && import->base == FLWRITELN) {
+      for (auto argument : arguments) {
+        std::cout << ((char) (argument.getFloat())) << '\n';
+      }
+      return Literal();
+    } else if (import->module == SPECTEST && import->base == FLPRINT) {
+      for (auto argument : arguments) {
+        std::cout << argument.getFloat();
+      }
+      return Literal();
+    } else if (import->module == SPECTEST && import->base == FLPRINTLN) {
+      for (auto argument : arguments) {
+        std::cout << argument.getFloat() << '\n';
+      }
+      return Literal();
+    }else if (import->module == SPECTEST && import->base == WRITE) {
       for (auto argument : arguments) {
         std::cout << ((char) (argument.getInteger()));
       }
